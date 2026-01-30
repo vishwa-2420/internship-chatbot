@@ -5,6 +5,7 @@ Aura is a state-of-the-art AI chatbot built to demonstrate modern web developmen
 ## 🚀 Features
 
 - **Model**: Powered by `gemini-3-flash-preview` (the latest cutting-edge model).
+- **Specialized Expert**: Includes a dedicated AI/ML Basics Q&A app with topic-specific tutoring at `/qa`.
 - **Design**: Premium Glassmorphism interface with smooth animations and neon accents.
 - **Backend**: Python/Flask server for secure API handling.
 - **Responsive**: Fully responsive design for desktop and mobile.

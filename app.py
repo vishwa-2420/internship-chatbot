@@ -23,6 +23,10 @@ MODEL_NAME = "gemini-3-flash-preview"
 def index():
     return render_template('index.html')
 
+@app.route('/qa')
+def qa():
+    return render_template('qa.html')
+
 @app.route('/api/chat', methods=['POST'])
 def chat():
     user_message = request.json.get('message')
@@ -30,30 +34,42 @@ def chat():
         return jsonify({"error": "No message provided"}), 400
 
     try:
-        # Initialize the model
         model = genai.GenerativeModel(MODEL_NAME)
-        
-        # In a real app, you might want to handle chat history
-        # For this demo, we'll keep it simple
         response = model.generate_content(user_message)
+        return jsonify({
+            "response": response.text,
+            "model": MODEL_NAME
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/qa', methods=['POST'])
+def api_qa():
+    user_query = request.json.get('message')
+    if not user_query:
+        return jsonify({"error": "No question provided"}), 400
+
+    # Specialized System Instruction for AI/ML Expert
+    system_instruction = (
+        "You are an expert tutor in Artificial Intelligence and Machine Learning basics. "
+        "Your goal is to provide clear, structured, and easy-to-understand answers to students. "
+        "Use bullet points, bold text for key terms, and simple analogies where possible. "
+        "If a question is not related to AI, ML, or Data Science, politely redirect the student to ask about those topics. "
+        "Keep the answers concise but informative."
+    )
+
+    try:
+        model = genai.GenerativeModel(MODEL_NAME)
+        # Combine instruction with user query for this simple demo
+        full_prompt = f"{system_instruction}\n\nStudent Question: {user_query}"
+        response = model.generate_content(full_prompt)
         
         return jsonify({
             "response": response.text,
             "model": MODEL_NAME
         })
     except Exception as e:
-        # Fallback to 2.0 if 3.0 fails (just in case the model name is slightly different/unreleased in user region)
-        try:
-            FALLBACK_MODEL = "gemini-2.0-flash-exp"
-            model = genai.GenerativeModel(FALLBACK_MODEL)
-            response = model.generate_content(user_message)
-            return jsonify({
-                "response": response.text,
-                "model": FALLBACK_MODEL,
-                "note": "Using fallback model 2.0"
-            })
-        except Exception as fallback_e:
-            return jsonify({"error": str(fallback_e)}), 500
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

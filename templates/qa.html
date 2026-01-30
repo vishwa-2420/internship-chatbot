@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/ML Expert | Q&A System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .topic-card:hover {
+            background: var(--accent-glow);
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+
+        .topic-card i {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+        }
+
+        .nav-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+
+        .nav-back:hover {
+            color: var(--accent-color);
+        }
+
+        .message.ai {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glow-bg"></div>
+
+    <a href="/" class="nav-back"><i data-lucide="arrow-left"></i> Back to Chat</a>
+
+    <main class="chat-container">
+        <header class="chat-header">
+            <div class="logo">
+                <i data-lucide="book-open" class="icon-sparkles"></i>
+                <h1>AI/ML Expert</h1>
+            </div>
+            <div class="status">
+                <span class="status-dot"></span>
+                <span>Specialized Q&A</span>
+            </div>
+        </header>
+
+        <section class="chat-messages" id="chat-messages">
+            <div class="welcome-section" style="padding: 20px; text-align: center;">
+                <h2 style="margin-bottom: 10px;">Welcome to AI/ML Basics!</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 30px;">Choose a topic below or ask your own
+                    question.</p>
+
+                <div class="topic-grid">
+                    <div class="topic-card" onclick="askTopic('What is Supervised Learning?')">
+                        <i data-lucide="brain"></i>
+                        Supervised Learning
+                    </div>
+                    <div class="topic-card" onclick="askTopic('Explain Neural Networks in simple terms.')">
+                        <i data-lucide="network"></i>
+                        Neural Networks
+                    </div>
+                    <div class="topic-card" onclick="askTopic('What is the difference between AI and ML?')">
+                        <i data-lucide="layers"></i>
+                        AI vs ML
+                    </div>
+                    <div class="topic-card" onclick="askTopic('How does Gradient Descent work?')">
+                        <i data-lucide="trending-down"></i>
+                        Gradient Descent
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="chat-input-area">
+            <div class="input-wrapper">
+                <input type="text" id="user-input" placeholder="Ask a question about AI/ML..." autocomplete="off">
+                <button id="send-btn">
+                    <i data-lucide="send"></i>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/qa_script.js') }}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
