@@ -55,13 +55,59 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data.error) {
                 appendMessage('ai', `Error: ${data.error}`);
             } else {
-                appendMessage('ai', data.response);
+                let aiResponse = data.response;
+                let suggestions = [];
+
+                // Parse suggestions
+                const suggestionIndex = aiResponse.indexOf('SUGGESTIONS:');
+                if (suggestionIndex !== -1) {
+                    const suggestionPart = aiResponse.substring(suggestionIndex + 12).trim();
+                    aiResponse = aiResponse.substring(0, suggestionIndex).trim();
+                    suggestions = suggestionPart.split(',').map(s => s.replace(/[\[\]]/g, '').trim());
+                }
+
+                appendMessage('ai', aiResponse);
+
+                // Render suggestions
+                if (suggestions.length > 0) {
+                    renderSuggestions(suggestions);
+                }
             }
         } catch (error) {
-            chatMessages.removeChild(typingDiv);
+            if (typingDiv.parentNode) chatMessages.removeChild(typingDiv);
             appendMessage('ai', "Sorry, I'm having trouble connecting to the AI Expert server.");
             console.error('Fetch error:', error);
         }
+    }
+
+    function renderSuggestions(suggestions) {
+        const suggestionContainer = document.createElement('div');
+        suggestionContainer.className = 'suggestion-container';
+
+        const title = document.createElement('p');
+        title.innerText = 'Related topics:';
+        title.style.fontSize = '0.8rem';
+        title.style.color = 'var(--text-secondary)';
+        title.style.marginBottom = '10px';
+        suggestionContainer.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className = 'topic-grid';
+        grid.style.marginBottom = '20px';
+
+        suggestions.forEach(topic => {
+            const card = document.createElement('div');
+            card.className = 'topic-card';
+            card.style.fontSize = '0.85rem';
+            card.style.padding = '10px';
+            card.innerText = topic;
+            card.onclick = () => sendMessage(topic);
+            grid.appendChild(card);
+        });
+
+        suggestionContainer.appendChild(grid);
+        chatMessages.appendChild(suggestionContainer);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     // Global function for topic cards

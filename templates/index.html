@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,18 +9,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <div class="glow-bg"></div>
-    
+
     <main class="chat-container">
         <header class="chat-header">
             <div class="logo">
                 <i data-lucide="sparkles" class="icon-sparkles"></i>
                 <h1>Aura</h1>
             </div>
-            <div class="status">
-                <span class="status-dot"></span>
-                <span>Gemini 3.0 Flash</span>
+            <div class="header-actions">
+                <a href="/qa" class="btn-expert">
+                    <i data-lucide="graduation-cap"></i>
+                    <span>Expert Mode</span>
+                </a>
+                <div class="status">
+                    <span class="status-dot"></span>
+                    <span>Gemini 3-Flash</span>
+                </div>
             </div>
         </header>
 
@@ -46,4 +54,5 @@
         lucide.createIcons();
     </script>
 </body>
+
 </html>
