@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura | Premium AI Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="glow-bg"></div>
+    
+    <main class="chat-container">
+        <header class="chat-header">
+            <div class="logo">
+                <i data-lucide="sparkles" class="icon-sparkles"></i>
+                <h1>Aura</h1>
+            </div>
+            <div class="status">
+                <span class="status-dot"></span>
+                <span>Gemini 3.0 Flash</span>
+            </div>
+        </header>
+
+        <section class="chat-messages" id="chat-messages">
+            <div class="message ai">
+                <div class="message-content">
+                    Hello! I'm Aura, your advanced AI assistant powered by Gemini 3.0. How can I help you today?
+                </div>
+            </div>
+        </section>
+
+        <footer class="chat-input-area">
+            <div class="input-wrapper">
+                <input type="text" id="user-input" placeholder="Type a message..." autocomplete="off">
+                <button id="send-btn">
+                    <i data-lucide="send"></i>
+                </button>
+            </div>
+        </footer>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
